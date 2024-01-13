@@ -1,6 +1,7 @@
 # Functions used in exercise 5
 
 import numpy as np
+from helper import solve_linear_system
 
 
 def lagrange_basis(x_values, x, k):
@@ -65,7 +66,7 @@ def spline(x_values, y_values):
         vector[i] = 3*(Delta[i]/delta[i] - Delta[i - 1]/delta[i - 1])
 
     # Solve linear system for c
-    c = np.linalg.solve(matrix, vector)
+    c = solve_linear_system(matrix.tolist(), vector.tolist())
 
     # Calculate d and b
     d = []
