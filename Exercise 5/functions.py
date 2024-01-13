@@ -4,19 +4,6 @@ import numpy as np
 from helper import solve_linear_system
 
 
-def lagrange_basis(x_values, x, k):
-    """Calculate the Lagrange basis polynomial.
-    
-    Parameters:
-        x_values (list): List of x values
-        x (float): The x value to calculate the Lagrange basis polynomial for
-        k (int): The index of the Lagrange basis polynomial
-    Returns:
-        float: The Lagrange basis polynomial for the given x value
-    """
-    return np.prod([(x - x_values[j])/(x_values[k] - x_values[j]) for j in range(len(x_values)) if j != k])
-
-
 def lagrange(new_x_values, x_values, y_values):
     """Calculate the Lagrange polynomial.
     
@@ -28,6 +15,18 @@ def lagrange(new_x_values, x_values, y_values):
     Returns:
         tuple: The calculated y values
     """
+    def lagrange_basis(x_values, x, k):
+        """Calculate the Lagrange basis polynomial.
+        
+        Parameters:
+            x_values (list): List of x values
+            x (float): The x value to calculate the Lagrange basis polynomial for
+            k (int): The index of the Lagrange basis polynomial
+        Returns:
+            float: The Lagrange basis polynomial for the given x value
+        """
+        return np.prod([(x - x_values[j])/(x_values[k] - x_values[j]) for j in range(len(x_values)) if j != k])
+
     return tuple([sum(y_values[k]*lagrange_basis(x_values, x, k) for k in range(len(x_values))) for x in new_x_values])
 
 
@@ -87,7 +86,7 @@ def spline(new_x_values, x_values, y_values):
         for i in range(len(x_values) - 1):
             if x_values[i] <= x <= x_values[i + 1]:
                 return spline_polynomial(i, x)
-        return None  # Handle cases where x is outside the range of x_values
+        return None  # Handle cases where x is outside the range of x_values (won't be needed as long as we cover the whole range in get_x_values()
 
     return tuple([spline_at(x) for x in new_x_values])
 
@@ -115,5 +114,5 @@ def least_squares(new_x_values, x_values, y_values):
     m = (n*sum_xy - sum_x*sum_y)/(n*sum_x2 - sum_x**2)
     b = (sum_y - m*sum_x)/n
 
-    # Implement y = mx + b formula
-    return tuple([m*new_x_values[i] + b for i in range(n)])
+    # Implement linear regression formula (y = mx + b)
+    return tuple([m*new_x_values[i] + b for i in range(len(new_x_values))])

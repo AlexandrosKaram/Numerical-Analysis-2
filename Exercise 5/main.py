@@ -1,38 +1,57 @@
 import numpy as np
 from random import uniform
 from functions import lagrange, spline, least_squares
+from graph_error import display_error_graph
 
 # Range of values to generate [0, 2pi]
 RANGE = (-np.pi, np.pi)
 # Decimal digit precision
-PRECISION = 5
+PRECISION = 8
 
 
-def print_results(x_values, expected_y, method_y):
-    """Print the results of the calculations.
-
+def result_difference(expected, method, precision=PRECISION):
+    """Calculate the difference between the expected and the calculated result.
+    
     Parameters:
-        x_values (list): List of x values
-        expected_y (list): List of expected y values
-        method_y (list): List of calculated y values
+        expected (float): Expected result
+        method (float): Calculated result
+    
+    Returns:
+        float: The average difference between the values of the two lists
     """
-    for i in range(len(x_values)):
-        print(f"{i+1}. For x={x_values[i]}:")
-        print(f"\tExpected: {expected_y[i]},\n\tMethod: {method_y[i]}")
+    difference = [abs(expected[i] - method[i]) for i in range(len(expected))]
+    return round(sum(difference)/len(difference), precision)
+
+
+def get_x_values(n, value_range):
+    """Generate n random x values in the given range.
+    
+    Parameters:
+        n (int): Number of x values to generate
+        value_range (tuple): Range of x values to generate
+    
+    Returns:
+        list: List of generated x values
+    """
+    # Get n random values within the range
+    result = [uniform(*value_range) for i in range(n)]
+    result.sort()
+    # Cover the whole range
+    result[0] = value_range[0]
+    result[-1] = value_range[1]
+
+    return result
 
  
 # Define main function
 def main():
-    # Generate 10 random numbers in our range
-    x_values = [uniform(*RANGE) for i in range(10)]
-    x_values.sort()
-
+    # Generate 10 random numbers in our range to create our methods
+    x_values = get_x_values(10, RANGE)
     # Calculate the sine of each value
     y_values = [np.sin(x) for x in x_values]
 
-    # Generate new x values to test our methods
-    new_x_values = [uniform(*RANGE) for i in range(10)]
-    new_x_values.sort()
+    # Generate 200 new x values to test our methods
+    new_x_values = get_x_values(200, RANGE)
     new_y_values = [np.sin(x) for x in new_x_values]
 
     # Calculate the Lagrange results
@@ -42,18 +61,18 @@ def main():
     # Calculate the least squares results
     least_squares_results = least_squares(new_x_values, x_values, y_values)
 
-    # Print results
-    print("Calculated y values using the following methods:")
-    print("Lagrange:")
-    print_results(new_x_values, new_y_values, lagrange_results)
-    print()
-    print("Spline:")
-    print_results(x_values, y_values, spline_results)
-    print()
-    print("Least squares:")
-    print_results(x_values, y_values, least_squares_results)
-    print()
-
+    # Calculate the differences between the expected and the calculated results
+    lagrange_difference = result_difference(new_y_values, lagrange_results)
+    spline_difference = result_difference(new_y_values, spline_results)
+    least_squares_difference = result_difference(new_y_values, least_squares_results)
+    print("Average differences between the expected and the calculated results for each method:")
+    print(f"\tLagrange: {lagrange_difference},\n\tSpline: {spline_difference},\n\tLeast squares: {least_squares_difference}")
+    
+    # Graph the errors between the expected and calculated results
+    display_error_graph(new_y_values, lagrange_results, new_x_values, "Lagrange")
+    display_error_graph(new_y_values, spline_results, new_x_values, "Spline")
+    display_error_graph(new_y_values, least_squares_results, new_x_values, "Least squares")
+    
 
 # Call main function
 main()
