@@ -3,10 +3,10 @@ from random import uniform
 from functions import lagrange, spline, least_squares
 from graph_error import display_error_graph
 
-# Range of values to generate [0, 2pi]
+# Range of values to generate [-π, π]
 RANGE = (-np.pi, np.pi)
 # Decimal digit precision
-PRECISION = 8
+PRECISION = 10
 
 
 def result_difference(expected, method, precision=PRECISION):
@@ -19,7 +19,7 @@ def result_difference(expected, method, precision=PRECISION):
     Returns:
         float: The average difference between the values of the two lists
     """
-    difference = [abs(expected[i] - method[i]) for i in range(len(expected))]
+    difference = [round(abs(expected[i] - method[i]), precision) for i in range(len(expected))]
     return round(sum(difference)/len(difference), precision)
 
 
@@ -48,11 +48,11 @@ def main():
     # Generate 10 random numbers in our range to create our methods
     x_values = get_x_values(10, RANGE)
     # Calculate the sine of each value
-    y_values = [np.sin(x) for x in x_values]
+    y_values = [round(np.sin(x), PRECISION) for x in x_values]
 
     # Generate 200 new x values to test our methods
     new_x_values = get_x_values(200, RANGE)
-    new_y_values = [np.sin(x) for x in new_x_values]
+    new_y_values = [round(np.sin(x), PRECISION) for x in new_x_values]
 
     # Calculate the Lagrange results
     lagrange_results = lagrange(new_x_values, x_values, y_values)
@@ -68,11 +68,11 @@ def main():
     print("Average differences between the expected and the calculated results for each method:")
     print(f"\tLagrange: {lagrange_difference},\n\tSpline: {spline_difference},\n\tLeast squares: {least_squares_difference}")
     
-    # Graph the errors between the expected and calculated results
+    # Graph the errors between the expected and calculated results for each method
     display_error_graph(new_y_values, lagrange_results, new_x_values, "Lagrange")
     display_error_graph(new_y_values, spline_results, new_x_values, "Spline")
     display_error_graph(new_y_values, least_squares_results, new_x_values, "Least squares")
-    
+
 
 # Call main function
 main()

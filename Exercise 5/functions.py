@@ -3,8 +3,11 @@
 import numpy as np
 from helper import solve_linear_system
 
+# Decimal digit precision constant
+PRECISION = 10   
 
-def lagrange(new_x_values, x_values, y_values):
+
+def lagrange(new_x_values, x_values, y_values, precision=PRECISION):
     """Calculate the Lagrange polynomial.
     
     Parameters:
@@ -27,10 +30,10 @@ def lagrange(new_x_values, x_values, y_values):
         """
         return np.prod([(x - x_values[j])/(x_values[k] - x_values[j]) for j in range(len(x_values)) if j != k])
 
-    return tuple([sum(y_values[k]*lagrange_basis(x_values, x, k) for k in range(len(x_values))) for x in new_x_values])
+    return tuple([round(sum(y_values[k]*lagrange_basis(x_values, x, k) for k in range(len(x_values))), precision) for x in new_x_values])
 
 
-def spline(new_x_values, x_values, y_values):
+def spline(new_x_values, x_values, y_values, precision=PRECISION):
     """Calculate the spline polynomial.
     
     Parameters:
@@ -88,10 +91,10 @@ def spline(new_x_values, x_values, y_values):
                 return spline_polynomial(i, x)
         return None  # Handle cases where x is outside the range of x_values (won't be needed as long as we cover the whole range in get_x_values()
 
-    return tuple([spline_at(x) for x in new_x_values])
+    return tuple([round(spline_at(x), precision) for x in new_x_values])
 
 
-def least_squares(new_x_values, x_values, y_values):
+def least_squares(new_x_values, x_values, y_values, precision=PRECISION):
     """Calculate results by the least squares method.
     
     Parameters:
@@ -115,4 +118,4 @@ def least_squares(new_x_values, x_values, y_values):
     b = (sum_y - m*sum_x)/n
 
     # Implement linear regression formula (y = mx + b)
-    return tuple([m*new_x_values[i] + b for i in range(len(new_x_values))])
+    return tuple([round(m*new_x_values[i] + b, precision) for i in range(len(new_x_values))])
