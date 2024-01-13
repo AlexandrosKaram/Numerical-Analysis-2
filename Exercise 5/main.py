@@ -1,11 +1,11 @@
 import numpy as np
 from random import uniform
-from functions import lagrange, spline
+from functions import lagrange, spline, least_squares
 
 # Range of values to generate [0, 2pi]
-RANGE = (0, 2*np.pi)
+RANGE = (-np.pi, np.pi)
 # Decimal digit precision
-PRECISION = 5
+PRECISION = 8
 
 
 # Define main function
@@ -15,20 +15,19 @@ def main():
     x_values.sort()
 
     # Calculate the sine of each value
-    y_values = [round(np.sin(x), 5) for x in x_values]
+    y_values = [round(np.sin(x), PRECISION) for x in x_values]
 
     # Calculate the Lagrange results
     lagrange_results = lagrange(x_values, y_values)
-    
-    spline_function = spline(x_values, y_values)
-    spline_results = [round(spline_function(x), PRECISION) for x in x_values]
+    # Calculate the Spline results
+    spline_results = spline(x_values, y_values)
+    # Calculate the least squares results
+    least_squares_results = least_squares(x_values, y_values)
 
     # Print results
     for i in range(len(x_values)):
-        print(f"X: {x_values[i]}")
-        print(f"Y: {y_values[i]}")
-        print(f"Lagrange: {lagrange_results[i]}")
-        print(f"Spline: {spline_results[i]}")
+        print(f"{i+1}.x: {x_values[i]}")
+        print(f"Expected: {y_values[i]}, Lagrange: {lagrange_results[i]}, Spline: {spline_results[i]}, Least Squares: {least_squares_results[i]}")
         print()
 
 

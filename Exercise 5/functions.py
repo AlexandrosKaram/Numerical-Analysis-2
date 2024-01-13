@@ -25,7 +25,7 @@ def lagrange(x_values, y_values):
         y_values (list): List of y values
 
     Returns:
-        tuple: The Lagrange polynomial 
+        tuple: The calculated values for y.
     """
     return tuple([sum(y_values[k]*lagrange_basis(x_values, x, k) for k in range(len(x_values))) for x in x_values])
 
@@ -38,7 +38,7 @@ def spline(x_values, y_values):
         y_values (list): List of y values
 
     Returns:
-        function: A function that computes the spline polynomial for a given x value
+        tuple: The calculated values for y.
     """
     a = []   # α
     delta = []   # δ
@@ -87,4 +87,30 @@ def spline(x_values, y_values):
                 return spline_polynomial(i, x)
         return None  # Handle cases where x is outside the range of x_values
 
-    return spline_at
+    return tuple([spline_at(x) for x in x_values])
+
+
+def least_squares(x_values, y_values):
+    """Calculate results by the least squares method.
+    
+    Parameters:
+        x_values (list): List of x values
+        y_values (list): List of y values
+    
+    Returns:
+        tuple: The calculated values for y.
+    """
+    n = len(x_values)
+
+    # Calculate summations used in the least squares method
+    sum_xy = sum(x_values[i]*y_values[i] for i in range(len(x_values))) 
+    sum_x = sum(x_values)
+    sum_y = sum(y_values)
+    sum_x2 = sum(x_values[i]**2 for i in range(len(x_values)))
+
+    # Calculate m and b
+    m = (n*sum_xy - sum_x*sum_y)/(n*sum_x2 - sum_x**2)
+    b = (sum_y - m*sum_x)/n
+
+    # Implement y = mx + b formula
+    return tuple([m*x_values[i] + b for i in range(n)])
