@@ -5,30 +5,54 @@ from functions import lagrange, spline, least_squares
 # Range of values to generate [0, 2pi]
 RANGE = (-np.pi, np.pi)
 # Decimal digit precision
-PRECISION = 8
+PRECISION = 5
 
 
+def print_results(x_values, expected_y, method_y):
+    """Print the results of the calculations.
+
+    Parameters:
+        x_values (list): List of x values
+        expected_y (list): List of expected y values
+        method_y (list): List of calculated y values
+    """
+    for i in range(len(x_values)):
+        print(f"{i+1}. For x={x_values[i]}:")
+        print(f"\tExpected: {expected_y[i]},\n\tMethod: {method_y[i]}")
+
+ 
 # Define main function
 def main():
-    # Generate 10 random numbers between 0 and 2pi
-    x_values = [round(uniform(*RANGE), PRECISION) for i in range(10)]
+    # Generate 10 random numbers in our range
+    x_values = [uniform(*RANGE) for i in range(10)]
     x_values.sort()
 
     # Calculate the sine of each value
-    y_values = [round(np.sin(x), PRECISION) for x in x_values]
+    y_values = [np.sin(x) for x in x_values]
+
+    # Generate new x values to test our methods
+    new_x_values = [uniform(*RANGE) for i in range(10)]
+    new_x_values.sort()
+    new_y_values = [np.sin(x) for x in new_x_values]
 
     # Calculate the Lagrange results
-    lagrange_results = lagrange(x_values, y_values)
+    lagrange_results = lagrange(new_x_values, x_values, y_values)
     # Calculate the Spline results
-    spline_results = spline(x_values, y_values)
+    spline_results = spline(new_x_values, x_values, y_values)
     # Calculate the least squares results
-    least_squares_results = least_squares(x_values, y_values)
+    least_squares_results = least_squares(new_x_values, x_values, y_values)
 
     # Print results
-    for i in range(len(x_values)):
-        print(f"{i+1}.x: {x_values[i]}")
-        print(f"Expected: {y_values[i]}, Lagrange: {lagrange_results[i]}, Spline: {spline_results[i]}, Least Squares: {least_squares_results[i]}")
-        print()
+    print("Calculated y values using the following methods:")
+    print("Lagrange:")
+    print_results(new_x_values, new_y_values, lagrange_results)
+    print()
+    print("Spline:")
+    print_results(x_values, y_values, spline_results)
+    print()
+    print("Least squares:")
+    print_results(x_values, y_values, least_squares_results)
+    print()
 
 
 # Call main function

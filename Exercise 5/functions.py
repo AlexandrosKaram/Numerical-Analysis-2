@@ -17,28 +17,30 @@ def lagrange_basis(x_values, x, k):
     return np.prod([(x - x_values[j])/(x_values[k] - x_values[j]) for j in range(len(x_values)) if j != k])
 
 
-def lagrange(x_values, y_values):
+def lagrange(new_x_values, x_values, y_values):
     """Calculate the Lagrange polynomial.
     
     Parameters:
+        new_x_values (list): List of new x values to calculate y values for
         x_values (list): List of x values
         y_values (list): List of y values
 
     Returns:
-        tuple: The calculated values for y.
+        tuple: The calculated y values
     """
-    return tuple([sum(y_values[k]*lagrange_basis(x_values, x, k) for k in range(len(x_values))) for x in x_values])
+    return tuple([sum(y_values[k]*lagrange_basis(x_values, x, k) for k in range(len(x_values))) for x in new_x_values])
 
 
-def spline(x_values, y_values):
+def spline(new_x_values, x_values, y_values):
     """Calculate the spline polynomial.
     
     Parameters:
+        new_x_values (list): List of new x values to calculate y values for
         x_values (list): List of x values
         y_values (list): List of y values
 
     Returns:
-        tuple: The calculated values for y.
+        tuple: The calculated y values
     """
     a = []   # α
     delta = []   # δ
@@ -87,30 +89,31 @@ def spline(x_values, y_values):
                 return spline_polynomial(i, x)
         return None  # Handle cases where x is outside the range of x_values
 
-    return tuple([spline_at(x) for x in x_values])
+    return tuple([spline_at(x) for x in new_x_values])
 
 
-def least_squares(x_values, y_values):
+def least_squares(new_x_values, x_values, y_values):
     """Calculate results by the least squares method.
     
     Parameters:
+        new_x_values (list): List of new x values to calculate y values for
         x_values (list): List of x values
         y_values (list): List of y values
     
     Returns:
-        tuple: The calculated values for y.
+        tuple: The calculated y values
     """
     n = len(x_values)
 
     # Calculate summations used in the least squares method
-    sum_xy = sum(x_values[i]*y_values[i] for i in range(len(x_values))) 
+    sum_xy = sum(x_values[i]*y_values[i] for i in range(n)) 
     sum_x = sum(x_values)
     sum_y = sum(y_values)
-    sum_x2 = sum(x_values[i]**2 for i in range(len(x_values)))
+    sum_x2 = sum(x_values[i]**2 for i in range(n))
 
     # Calculate m and b
     m = (n*sum_xy - sum_x*sum_y)/(n*sum_x2 - sum_x**2)
     b = (sum_y - m*sum_x)/n
 
     # Implement y = mx + b formula
-    return tuple([m*x_values[i] + b for i in range(n)])
+    return tuple([m*new_x_values[i] + b for i in range(n)])
