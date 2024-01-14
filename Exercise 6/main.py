@@ -11,8 +11,13 @@ RANGE = (0, np.pi/2)
 
 # Define main function
 def main():
+    trapezoidal_result = trapezoidal_integration(RANGE)
+    simpson_result = simpson_integration(RANGE)
+
     print("Integral of sin(x) from 0 to π/2:")
-    print(f"Trapezoidal integration: {trapezoidal_integration(RANGE)}")
+    print(f"Expected result: 1")
+    print(f"Trapezoidal integration: {trapezoidal_result}, Error: {abs(1 - trapezoidal_result)}")
+    print(f"Simpson integration: {simpson_result}, Error: {abs(1 - simpson_result)}")
 
 
 # Call main function
