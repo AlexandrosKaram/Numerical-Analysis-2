@@ -1,8 +1,8 @@
 import numpy as np
 from functions import lagrange, spline, least_squares
 from graph_error import display_error_graph
-import sys, os
 # Import from parent directory
+import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from global_functions import generate_x_values, result_difference
 

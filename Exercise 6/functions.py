@@ -1,6 +1,14 @@
 import numpy as np
 
 def trapezoidal_integration(x_range):
+    """Calculate the integral of sin(x) in the given range using the trapezoidal rule.
+    
+    Parameters:
+        x_range (tuple): Range of x values to integrate over
+        
+    Returns:
+        float: The calculated integral
+    """
     range_diff = x_range[-1] - x_range[0]
     N = 10   # Number of intervals (11 - 1)
 
@@ -13,6 +21,14 @@ def trapezoidal_integration(x_range):
     
 
 def simpson_integration(x_range):
+    """Calculate the integral of sin(x) in the given range using the Simpson rule.
+    
+    Parameters:
+        x_range (tuple): Range of x values to integrate over
+    
+    Returns:
+        float: The calculated integral
+    """
     range_diff = x_range[-1] - x_range[0]
     N = 10   # Number of intervals (11 - 1)
 
