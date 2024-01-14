@@ -19,7 +19,7 @@ def display_error_graph(expected_y, method_y, x_values, method_name):
     plt.plot(x_values, error_y_values)
     plt.grid()
     plt.title("Error graph of " + method_name + " method")
-    plt.xlabel("x-ayis")
+    plt.xlabel("Angle")
     plt.ylabel("Error")
 
     plt.show()

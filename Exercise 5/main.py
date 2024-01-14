@@ -1,7 +1,10 @@
 import numpy as np
-from random import uniform
 from functions import lagrange, spline, least_squares
 from graph_error import display_error_graph
+import sys, os
+# Import from parent directory
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from global_functions import generate_x_values, result_difference
 
 # Range of values to generate [-π, π]
 RANGE = (-np.pi, np.pi)
@@ -9,49 +12,16 @@ RANGE = (-np.pi, np.pi)
 PRECISION = 10
 
 
-def result_difference(expected, method, precision=PRECISION):
-    """Calculate the difference between the expected and the calculated result.
-    
-    Parameters:
-        expected (float): Expected result
-        method (float): Calculated result
-    
-    Returns:
-        float: The average difference between the values of the two lists
-    """
-    difference = [round(abs(expected[i] - method[i]), precision) for i in range(len(expected))]
-    return round(sum(difference)/len(difference), precision)
-
-
-def get_x_values(n, value_range):
-    """Generate n random x values in the given range.
-    
-    Parameters:
-        n (int): Number of x values to generate
-        value_range (tuple): Range of x values to generate
-    
-    Returns:
-        list: List of generated x values
-    """
-    # Get n random values within the range
-    result = [uniform(*value_range) for i in range(n)]
-    result.sort()
-    # Cover the whole range
-    result[0] = value_range[0]
-    result[-1] = value_range[1]
-
-    return result
-
- 
 # Define main function
 def main():
     # Generate 10 random numbers in our range to create our methods
-    x_values = get_x_values(10, RANGE)
+    x_values = generate_x_values(10, RANGE)
+    print("x values:", x_values)
     # Calculate the sine of each value
     y_values = [round(np.sin(x), PRECISION) for x in x_values]
 
     # Generate 200 new x values to test our methods
-    new_x_values = get_x_values(200, RANGE)
+    new_x_values = generate_x_values(200, RANGE)
     new_y_values = [round(np.sin(x), PRECISION) for x in new_x_values]
 
     # Calculate the Lagrange results
