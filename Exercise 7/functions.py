@@ -12,14 +12,17 @@ def least_squares_2(new_x_values, x_values, y_values):
     Returns:
         tuple: List of y values for the new x values
     """
+    x_values = np.array(x_values)
+    y_values = np.array(y_values)
+
     # Summations needed for the calculation
     sum_x = np.sum(x_values)
     sum_y = np.sum(y_values)
-    sum_x2 = np.sum([x**2 for x in x_values])
-    sum_x3 = np.sum([x**3 for x in x_values])
-    sum_x4 = np.sum([x**4 for x in x_values])
-    sum_xy = np.sum([x*y for x, y in zip(x_values, y_values)])
-    sum_x2y = np.sum([x**2*y for x, y in zip(x_values, y_values)])
+    sum_x2 = np.sum(x_values**2)
+    sum_x3 = np.sum(x_values**3)
+    sum_x4 = np.sum(x_values**4)
+    sum_xy = np.sum(x_values * y_values)
+    sum_x2y = np.sum(x_values**2 * y_values)
     
     n = len(x_values)
 
@@ -47,6 +50,10 @@ def least_squares_3(new_x_values, x_values, y_values):
     Returns:
         tuple: List of y values for the new x values
     """
+    x_values = np.array(x_values)
+    y_values = np.array(y_values)
+
+    # Summations needed for the calculation
     sum_x = np.sum(x_values)
     sum_y = np.sum(y_values)
     sum_x2 = np.sum(x_values**2)
@@ -84,6 +91,10 @@ def least_squares_4(new_x_values, x_values, y_values):
     Returns:
         tuple: List of y values for the new x values
     """
+    x_values = np.array(x_values)
+    y_values = np.array(y_values)
+
+    # Summations needed for the calculation
     sum_x = np.sum(x_values)
     sum_y = np.sum(y_values)
     sum_x2 = np.sum(x_values**2)

@@ -45,4 +45,5 @@ def main():
 
 
 # Call main function
-main()
+if __name__ == "__main__":
+    main()
