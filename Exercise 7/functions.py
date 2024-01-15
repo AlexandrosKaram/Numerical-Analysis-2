@@ -10,7 +10,7 @@ def least_squares_2(new_x_values, x_values, y_values):
         y_values (list): List of y values
 
     Returns:
-        tuple: List of y values for the new x values
+        list: List of y values for the new x values
     """
     x_values = np.array(x_values)
     y_values = np.array(y_values)
@@ -28,7 +28,10 @@ def least_squares_2(new_x_values, x_values, y_values):
 
     # Calculate the coefficients
     coefficient_matrix = np.array(
-        [[sum_x4, sum_x3, sum_x2], [sum_x3, sum_x2, sum_x], [sum_x2, sum_x, n]]
+        [
+            [sum_x4, sum_x3, sum_x2], 
+            [sum_x3, sum_x2, sum_x], 
+            [sum_x2, sum_x, n]]
     )
 
     vector = np.array([sum_x2y, sum_xy, sum_y])
@@ -37,7 +40,7 @@ def least_squares_2(new_x_values, x_values, y_values):
     a, b, c = np.linalg.solve(coefficient_matrix, vector)
 
     # Calculate the y values for the new x values
-    return tuple([a * x**2 + b * x + c for x in new_x_values])
+    return [round(a * x**2 + b * x + c, 4) for x in new_x_values]
 
 
 def least_squares_3(new_x_values, x_values, y_values):
@@ -49,7 +52,7 @@ def least_squares_3(new_x_values, x_values, y_values):
         y_values (list): List of y values
 
     Returns:
-        tuple: List of y values for the new x values
+        list: List of y values for the new x values
     """
     x_values = np.array(x_values)
     y_values = np.array(y_values)
@@ -83,7 +86,7 @@ def least_squares_3(new_x_values, x_values, y_values):
     a, b, c, d = np.linalg.solve(coefficient_matrix, vector)
 
     # Calculate the y values for the new x values
-    return tuple([a * x**3 + b * x**2 + c * x + d for x in new_x_values])
+    return [round(a * x**3 + b * x**2 + c * x + d, 4) for x in new_x_values]
 
 
 def least_squares_4(new_x_values, x_values, y_values):
@@ -95,7 +98,7 @@ def least_squares_4(new_x_values, x_values, y_values):
         y_values (list): List of y values
 
     Returns:
-        tuple: List of y values for the new x values
+        list: List of y values for the new x values
     """
     x_values = np.array(x_values)
     y_values = np.array(y_values)
@@ -132,6 +135,4 @@ def least_squares_4(new_x_values, x_values, y_values):
     a, b, c, d, e = np.linalg.solve(coefficient_matrix, vector)
 
     # Calculate the y values for the new x values
-    return tuple(
-        [a * x**4 + b * x**3 + c * x**2 + d * x + e for x in new_x_values]
-    )
+    return [round(a * x**4 + b * x**3 + c * x**2 + d * x + e, 4) for x in new_x_values]

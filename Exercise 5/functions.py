@@ -95,7 +95,7 @@ def spline(new_x_values, x_values, y_values, precision=PRECISION):
 
 
 def least_squares(new_x_values, x_values, y_values, precision=PRECISION):
-    """Calculate results by the least squares method.
+    """Calculate results by 1st degree (linear) least squares method.
     
     Parameters:
         new_x_values (list): List of new x values to calculate y values for

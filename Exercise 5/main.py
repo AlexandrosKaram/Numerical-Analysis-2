@@ -4,7 +4,7 @@ from graph_error import display_error_graph
 # Import from parent directory
 import sys, os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from global_functions import generate_x_values, result_difference
+from global_functions import generate_x_values, average_result_difference
 
 # Range of values to generate [-π, π]
 RANGE = (-np.pi, np.pi)
@@ -16,7 +16,11 @@ PRECISION = 10
 def main():
     # Generate 10 random numbers in our range to create our methods
     x_values = generate_x_values(10, RANGE)
-    print("x values:", x_values)
+    
+    print("X values used to create our methods:")
+    for x in x_values:
+        print(f"\t{round(x, 5)}")
+
     # Calculate the sine of each value
     y_values = [round(np.sin(x), PRECISION) for x in x_values]
 
@@ -24,17 +28,17 @@ def main():
     new_x_values = generate_x_values(200, RANGE)
     new_y_values = [round(np.sin(x), PRECISION) for x in new_x_values]
 
-    # Calculate the Lagrange results
+    # Calculate the 200 Lagrange results
     lagrange_results = lagrange(new_x_values, x_values, y_values)
-    # Calculate the Spline results
+    # Calculate the 200 Spline results
     spline_results = spline(new_x_values, x_values, y_values)
-    # Calculate the least squares results
+    # Calculate the 200 least squares results
     least_squares_results = least_squares(new_x_values, x_values, y_values)
 
     # Calculate the differences between the expected and the calculated results
-    lagrange_difference = result_difference(new_y_values, lagrange_results)
-    spline_difference = result_difference(new_y_values, spline_results)
-    least_squares_difference = result_difference(new_y_values, least_squares_results)
+    lagrange_difference = average_result_difference(new_y_values, lagrange_results)
+    spline_difference = average_result_difference(new_y_values, spline_results)
+    least_squares_difference = average_result_difference(new_y_values, least_squares_results)
     print("Average differences between the expected and the calculated results for each method:")
     print(f"\tLagrange: {lagrange_difference},\n\tSpline: {spline_difference},\n\tLeast squares: {least_squares_difference}")
     

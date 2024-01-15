@@ -1,4 +1,4 @@
-from functions import least_squares_2, least_squares_3, least_squares_4
+from functions import *
 
 
 # Define main function
@@ -14,9 +14,9 @@ def main():
     # Print results
     print("OPAP stock closings before 23/6/2023")
     print("Results calculated by the least squares methods:")
-    print(f"Second degree polynomial:\n\t{OPAP_ls2}")
-    print(f"Third degree polynomial:\n\t{OPAP_ls3}")
-    print(f"Fourth degree polynomial:\n\t{OPAP_ls4}")
+    print(f"Second degree polynomial:\n\tNext day: {OPAP_ls2[0]}\n\tNext five days: {OPAP_ls2[1::]}")
+    print(f"Third degree polynomial:\n\tNext day: {OPAP_ls3[0]}\n\tNext five days: {OPAP_ls3[1::]}")
+    print(f"Fourth degree polynomial:\n\tNext day: {OPAP_ls4[0]}\n\tNext five days: {OPAP_ls4[1::]}")
 
     # Closings for DEH stock before 23/6/2023
     DEH = [10.1500, 10.2200, 10.2500, 10.1700, 10.1000, 10.1800, 10.1200, 10.1000, 10.1000, 9.9850]
@@ -29,9 +29,9 @@ def main():
     # Print results
     print("\nDEH stock closings before 23/6/2023")
     print("Results calculated by the least squares methods:")
-    print(f"Second degree polynomial:\n\t{DEH_ls2}")
-    print(f"Third degree polynomial:\n\t{DEH_ls3}")
-    print(f"Fourth degree polynomial:\n\t{DEH_ls4}")
+    print(f"Second degree polynomial:\n\tNext day: {DEH_ls2[0]}\n\tNext five days: {DEH_ls2[1::]}")
+    print(f"Third degree polynomial:\n\tNext day: {DEH_ls3[0]}\n\tNext five days: {DEH_ls3[1::]}")
+    print(f"Fourth degree polynomial:\n\tNext day: {DEH_ls4[0]}\n\tNext five days: {DEH_ls4[1::]}")
     
 
 # Call main function

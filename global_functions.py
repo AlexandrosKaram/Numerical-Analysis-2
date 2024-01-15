@@ -3,6 +3,7 @@ from random import uniform
 # Decimal digit precision
 PRECISION = 10
 
+
 def generate_x_values(n, value_range):
     """Generate n random x values in the given range.
     
@@ -11,7 +12,7 @@ def generate_x_values(n, value_range):
         value_range (tuple): Range of x values to generate
     
     Returns:
-        list: List of generated x values
+        list: List of generated x values in decreasing order
     """
     # Get n random values within the range
     result = [uniform(*value_range) for i in range(n)]
@@ -23,7 +24,7 @@ def generate_x_values(n, value_range):
     return result
 
 
-def result_difference(expected, method, precision=PRECISION):
+def average_result_difference(expected, method, precision=PRECISION):
     """Calculate the difference between the expected and the calculated result.
     
     Parameters:

@@ -103,7 +103,4 @@ def solve_linear_system(A, b):
         # Divide by diagonal element
         x[i] /= U[i][i]
 
-    for i in range(len(x)):
-        x[i] = round(x[i], 2)
-
     return x
