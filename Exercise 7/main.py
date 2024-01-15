@@ -8,14 +8,31 @@ def main():
 
     # Calculate expected closing for 23/6/2023
     OPAP_ls2 = least_squares_2([10, 11, 12, 13, 14, 15], range(1, 11), OPAP)
-    print(OPAP_ls2)
-
     OPAP_ls3 = least_squares_3([10, 11, 12, 13, 14, 15], range(1, 11), OPAP)
-    print(OPAP_ls3)
-
     OPAP_ls4 = least_squares_4([10, 11, 12, 13, 14, 15], range(1, 11), OPAP)
-    print(OPAP_ls4)
+    
+    # Print results
+    print("OPAP stock closings before 23/6/2023")
+    print("Results calculated by the least squares methods:")
+    print(f"Second degree polynomial:\n\t{OPAP_ls2}")
+    print(f"Third degree polynomial:\n\t{OPAP_ls3}")
+    print(f"Fourth degree polynomial:\n\t{OPAP_ls4}")
 
+    # Closings for DEH stock before 23/6/2023
+    DEH = [10.1500, 10.2200, 10.2500, 10.1700, 10.1000, 10.1800, 10.1200, 10.1000, 10.1000, 9.9850]
+
+    # Calculate expected closing for 23/6/2023
+    DEH_ls2 = least_squares_2([10, 11, 12, 13, 14, 15], range(1, 11), DEH)
+    DEH_ls3 = least_squares_3([10, 11, 12, 13, 14, 15], range(1, 11), DEH)
+    DEH_ls4 = least_squares_4([10, 11, 12, 13, 14, 15], range(1, 11), DEH)
+
+    # Print results
+    print("\nDEH stock closings before 23/6/2023")
+    print("Results calculated by the least squares methods:")
+    print(f"Second degree polynomial:\n\t{DEH_ls2}")
+    print(f"Third degree polynomial:\n\t{DEH_ls3}")
+    print(f"Fourth degree polynomial:\n\t{DEH_ls4}")
+    
 
 # Call main function
 if __name__ == "__main__":
