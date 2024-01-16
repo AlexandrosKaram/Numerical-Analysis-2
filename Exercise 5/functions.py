@@ -18,19 +18,19 @@ def lagrange(new_x_values, x_values, y_values, precision=PRECISION):
     Returns:
         tuple: The calculated y values
     """
-    def lagrange_basis(x_values, x, k):
+    def lagrange_basis(x_values, x, i):
         """Calculate the Lagrange basis polynomial.
         
         Parameters:
             x_values (list): List of x values
             x (float): The x value to calculate the Lagrange basis polynomial for
-            k (int): The index of the Lagrange basis polynomial
+            i (int): The index of the Lagrange basis polynomial
         Returns:
             float: The Lagrange basis polynomial for the given x value
         """
-        return np.prod([(x - x_values[j])/(x_values[k] - x_values[j]) for j in range(len(x_values)) if j != k])
+        return np.prod([(x - x_values[j])/(x_values[i] - x_values[j]) for j in range(len(x_values)) if j != i])
 
-    return tuple([round(sum(y_values[k]*lagrange_basis(x_values, x, k) for k in range(len(x_values))), precision) for x in new_x_values])
+    return tuple([round(sum(y_values[i]*lagrange_basis(x_values, x, i) for i in range(len(x_values))), precision) for x in new_x_values])
 
 
 def spline(new_x_values, x_values, y_values, precision=PRECISION):
